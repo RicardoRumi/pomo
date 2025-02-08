@@ -14,13 +14,42 @@
 
         body {
             display: flex;
-            justify-content: center;
-            align-items: flex-end;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
             background-color: black;
             color: white;
             font-family: Arial, sans-serif;
             cursor: pointer;
             user-select: none;
+        }
+
+
+        #hour-display {
+            font-size: 70vmin;
+            text-align: center;
+            width: 100%;
+            font-weight: bold;
+            line-height: 0.8;
+            padding-top: 2vh;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            padding-right: 10vw;
+        }
+
+        #minutes-display {
+            font-size: 35vmin;
+            text-align: right;
+            font-weight: bold;
+            line-height: 0.8;
+            margin-right: -2vw;
+        }
+        
+
+        #hours-only {
+            text-align: center;
+            width: 100%;
         }
 
         #timer {
@@ -34,6 +63,10 @@
     </style>
 </head>
 <body onclick="startTimer()">
+    <div id="hour-display">
+        <div id="hours-only"></div>
+        <div id="minutes-display"></div>
+    </div>
     <div id="timer">25</div>
     <script src="script.js"></script>
 </body>
