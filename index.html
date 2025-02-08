@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <style>
+        body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        #timer {
+            font-size: 45vmin;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            line-height: 0.85;
+            text-align: center;
+            width: 100%;
+        }
+
+        .minutes, .seconds {
+            display: block;
+            width: 100%;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body onclick="startTimer()">
+    <div id="timer">
+        <span class="minutes">25</span>
+        <span class="seconds">00</span>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 
