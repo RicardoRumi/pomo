@@ -2,6 +2,11 @@ let timeLeft = 25 * 60; // 25 minutes in seconds
 let timerId = null;
 let isRunning = false;
 
+// Auto scroll to bottom
+setInterval(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+}, 100);
+
 // Call updateDisplay immediately when the script loads
 updateDisplay();
 
