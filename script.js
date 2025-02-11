@@ -12,55 +12,24 @@ let isRunning = false;
 let startTime = null;
 let targetEndTime = null;
 let isThirtySecTimer = false;
-let audioContext = null;
+
+// Create audio element for change sound
+const changeSound = new Audio('change.wav');
 
 // Sound configuration - easy to modify
 const SOUND_CONFIG = {
-    frequency: 440,      // Frequency in Hz
-    volume: 1.0,        // Volume level (0.0 to 1.0)
-    beepLength: .2,    // Length of each beep in seconds
-    gapBetween: 0.1,   // Gap between beeps in seconds
-    numberOfBeeps: 2,    // How many beeps to play
+    numberOfPlays: 1,    // How many times to play the sound
+    gapBetween: 100     // Gap between plays in milliseconds
 };
 
 /*
  * The beep function is like a tiny musician in your device:
- * - It creates musical instruments (oscillator)
- * - Tunes them to a gentle note (lower frequency)
- * - Plays beeps according to the configuration
- * - Then gracefully fades away
+ * - Uses the change.wav sound
+ * - Plays it the specified number of times
  */
 function beep(config = SOUND_CONFIG) {
     try {
-        // Wake up our musician (audio context) if they're not ready
-        if (!audioContext) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        }
-
-        // Function to create a single beep
-        function playOneBeep(startTime) {
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(config.frequency, startTime);
-            gainNode.gain.setValueAtTime(config.volume, startTime);
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.start(startTime);
-            oscillator.stop(startTime + config.beepLength);
-            
-            gainNode.gain.setValueAtTime(config.volume, startTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.5, startTime + config.beepLength);
-        }
-
-        // Play all beeps in sequence
-        for (let i = 0; i < config.numberOfBeeps; i++) {
-            playOneBeep(audioContext.currentTime + (i * (config.beepLength + config.gapBetween)));
-        }
-
+        changeSound.play();
     } catch (e) {
         console.log('Audio error:', e);
     }
@@ -129,7 +98,7 @@ function start30SecTimer() {
     isRunning = true;
     isThirtySecTimer = true;
     document.body.style.backgroundColor = 'blue';
-    timeLeft = 30;
+    timeLeft = 5;
     
     function runTimer() {
         startTime = Date.now();
@@ -141,7 +110,7 @@ function start30SecTimer() {
             
             if (timeLeft <= 0) {
                 beep();
-                timeLeft = 30;
+                timeLeft = 5;
                 startTime = Date.now();
                 targetEndTime = startTime + (timeLeft * 1000);
             }
@@ -194,7 +163,7 @@ function updateDisplay() {
         document.getElementById('timer').textContent = Math.max(timeLeft, 0);
     } else {
         const minutes = Math.max(Math.ceil(timeLeft / 60), 0);
-        document.getElementById('timer').textContent = minutes;
+    document.getElementById('timer').textContent = minutes;
     }
 }
 
