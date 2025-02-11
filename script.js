@@ -1,17 +1,80 @@
+/*
+ * Our timer is like a kitchen with different tools:
+ * - timeLeft is like the countdown on a microwave
+ * - timerId is like the on/off switch
+ * - isRunning tells us if we're cooking or not
+ * - startTime and targetEndTime are like the recipe's start and end times
+ * - isThirtySecTimer is like choosing between microwave (30s) or oven (25min) mode
+ */
 let timeLeft = 25 * 60; // 25 minutes in seconds
 let timerId = null;
 let isRunning = false;
 let startTime = null;
 let targetEndTime = null;
 let isThirtySecTimer = false;
-let beepSound = new Audio('data:audio/wav;base64,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qJrx4KOQjahZxWbcZgztj2c49nKmkId44S71j0c8eV9yDK6uPRzx5X18eDvjvQ6yKo9ZSS6l//8elePK/Lf//IInrOF/FvDoADYAGBMGb7FtErm5MXMlmPAJQVgWta7Zx2go+8xJ0UiCb8LHHdftWyLJE0QIAIsI+UbXu67dZMjmgDGCGl1H+vpF4NSDckSIkk7Vd+sxEhBQMRU8j/12UIRhzSaUdQ+rQU5kGeFxm+hb1oh6pWWmv3uvmReDl0UnvtapVaIzo1jZbf/pD6ElLqSX+rUmOQNpJFa/r+sa4e/pBlAABoAAAAA3CUgShLdGIxsY7AUABPRrgCABdDuQ5GC7DqPQCgbbJUAoRSUj+NIEig0YfyWUho1VBBBA//uQZB4ABZx5zfMakeAAAAmwAAAAF5F3P0w9GtAAACfAAAAAwLhMDmAYWMgVEG1U0FIGCBgXBXAtfMH10000EEEEEECUBYln03TTTdNBDZopopYvrTTdNa325mImNg3TTPV9q3pmY0xoO6bv3r00y+IDGid/9aaaZTGMuj9mpu9Mpio1dXrr5HERTZSmqU36A3CumzN/9Robv/Xx4v9ijkSRSNLQhAWumap82WRSBUqXStV/YcS+XVLnSS+WLDroqArFkMEsAS+eWmrUzrO0oEmE40RlMZ5+ODIkAyKAGUwZ3mVKmcamcJnMW26MRPgUw6j+LkhyHGVGYjSUUKNpuJUQoOIAyDvEyG8S5yfK6dhZc0Tx1KI/gviKL6qvvFs1+bWtaz58uUNnryq6kt5RzOCkPWlVqVX2a/EEBUdU1KrXLf40GoiiFXK///qpoiDXrOgqDR38JB0bw7SoL+ZB9o1RCkQjQ2CBYZKd/+VJxZRRZlqSkKiws0WFxUyCwsKiMy7hUVFhIaCrNQsKkTIsLivwKKigsj8XYlwt/WKi2N4d//uQRCSAAjURNIHpMZBGYiaQPSYyAAABLAAAAAAAACWAAAAApUF/Mg+0aohSIRobBAsMlO//Kk4soosy1JSFRYWaLC4qZBYWFRGZdwqKiwkNBVmoWFSJkWFxX4FFRQWR+LsS4W/rFRb/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VEFHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAU291bmRib3kuZGUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAMjAwNGh0dHA6Ly93d3cuc291bmRib3kuZGUAAAAAAAAAACU=');
+let audioContext = null;
 
-// Auto scroll to bottom
+// Sound configuration - easy to modify
+const SOUND_CONFIG = {
+    frequency: 440,      // Frequency in Hz
+    volume: 1.0,        // Volume level (0.0 to 1.0)
+    beepLength: .2,    // Length of each beep in seconds
+    gapBetween: 0.1,   // Gap between beeps in seconds
+    numberOfBeeps: 2,    // How many beeps to play
+};
+
+/*
+ * The beep function is like a tiny musician in your device:
+ * - It creates musical instruments (oscillator)
+ * - Tunes them to a gentle note (lower frequency)
+ * - Plays beeps according to the configuration
+ * - Then gracefully fades away
+ */
+function beep(config = SOUND_CONFIG) {
+    try {
+        // Wake up our musician (audio context) if they're not ready
+        if (!audioContext) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        }
+
+        // Function to create a single beep
+        function playOneBeep(startTime) {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(config.frequency, startTime);
+            gainNode.gain.setValueAtTime(config.volume, startTime);
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.start(startTime);
+            oscillator.stop(startTime + config.beepLength);
+            
+            gainNode.gain.setValueAtTime(config.volume, startTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.5, startTime + config.beepLength);
+        }
+
+        // Play all beeps in sequence
+        for (let i = 0; i < config.numberOfBeeps; i++) {
+            playOneBeep(audioContext.currentTime + (i * (config.beepLength + config.gapBetween)));
+        }
+
+    } catch (e) {
+        console.log('Audio error:', e);
+    }
+}
+
+/*
+ * These are like the background workers in a clock shop:
+ * - One keeps the display window clean (auto scroll)
+ * - Another updates the time display like a diligent clockmaker
+ */
 setInterval(() => {
     window.scrollTo(0, document.body.scrollHeight);
 }, 100);
 
-// Update current time every second
 setInterval(() => {
     const now = new Date();
     const hours = now.getHours().toString().padStart(2, '0');
@@ -20,10 +83,15 @@ setInterval(() => {
     document.getElementById('minutes-display').textContent = mins;
 }, 1000);
 
-// Call updateDisplay immediately when the script loads
+// First display setup, like setting up a shop window
 updateDisplay();
 
-// Remove the onclick from body and add our own click handler
+/*
+ * The click handler is like a shop with two departments:
+ * - Upper floor (top half): Quick 30-second timer department
+ * - Lower floor (bottom half): Traditional 25-minute pomodoro department
+ * Each floor has its own staff and procedures
+ */
 document.body.removeAttribute('onclick');
 document.body.addEventListener('click', handleClick);
 
@@ -31,17 +99,15 @@ function handleClick(event) {
     const middleOfScreen = window.innerHeight / 2;
     
     if (event.clientY < middleOfScreen) {
-        // Top half - handle 30 second timer
+        // Top floor service
         if (isRunning && isThirtySecTimer) {
-            // If 30-sec timer is running, stop it
             clearInterval(timerId);
             resetTimer();
         } else {
-            // Start 30-sec timer
             start30SecTimer();
         }
     } else {
-        // Bottom half - original pomodoro behavior
+        // Bottom floor service
         if (isRunning) {
             clearInterval(timerId);
             resetTimer();
@@ -51,13 +117,19 @@ function handleClick(event) {
     }
 }
 
+/*
+ * The 30-second timer is like a quick microwave timer:
+ * - Sets up quickly
+ * - Counts down in seconds
+ * - Beeps and restarts automatically like a microwave that keeps warming
+ */
 function start30SecTimer() {
     if (isRunning) return;
     
     isRunning = true;
     isThirtySecTimer = true;
     document.body.style.backgroundColor = 'blue';
-    timeLeft = 30; // 30 seconds
+    timeLeft = 30;
     
     function runTimer() {
         startTime = Date.now();
@@ -68,8 +140,7 @@ function start30SecTimer() {
             timeLeft = Math.ceil((targetEndTime - currentTime) / 1000);
             
             if (timeLeft <= 0) {
-                beepSound.play();
-                // Reset for next 30-second cycle
+                beep();
                 timeLeft = 30;
                 startTime = Date.now();
                 targetEndTime = startTime + (timeLeft * 1000);
@@ -82,13 +153,19 @@ function start30SecTimer() {
     runTimer();
 }
 
+/*
+ * The 25-minute timer is like a traditional oven timer:
+ * - Takes longer to complete
+ * - Shows time in minutes instead of seconds
+ * - Stops completely when done, like a proper oven timer
+ */
 function startTimer() {
     if (isRunning) return;
     
     isRunning = true;
     isThirtySecTimer = false;
     document.body.style.backgroundColor = 'red';
-    timeLeft = 25 * 60; // Reset to 25 minutes
+    timeLeft = 25 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
     
@@ -106,17 +183,28 @@ function startTimer() {
     }, 1000);
 }
 
+/*
+ * The display update is like a digital sign updater:
+ * - Checks which department we're in (30s or 25min)
+ * - Updates the numbers accordingly
+ * - Makes sure we never show negative numbers
+ */
 function updateDisplay() {
     if (isThirtySecTimer) {
-        // For 30-second timer, show seconds
         document.getElementById('timer').textContent = Math.max(timeLeft, 0);
     } else {
-        // For pomodoro timer, show minutes
         const minutes = Math.max(Math.ceil(timeLeft / 60), 0);
         document.getElementById('timer').textContent = minutes;
     }
 }
 
+/*
+ * The reset function is like closing time at the shop:
+ * - Turns off all the timers
+ * - Resets all the displays
+ * - Returns everything to its original state
+ * - Turns off the lights (changes background to black)
+ */
 function resetTimer() {
     isRunning = false;
     isThirtySecTimer = false;
