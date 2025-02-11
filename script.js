@@ -113,7 +113,7 @@ function start30SecTimer() {
     isRunning = true;
     isThirtySecTimer = true;
     document.body.style.backgroundColor = 'blue';
-    timeLeft = 5;
+    timeLeft = 30;
     
     function runTimer() {
         startTime = Date.now();
@@ -125,7 +125,7 @@ function start30SecTimer() {
             
             if (timeLeft <= 0) {
                 beep();
-                timeLeft = 5;
+                timeLeft = 30;
                 startTime = Date.now();
                 targetEndTime = startTime + (timeLeft * 1000);
             }
