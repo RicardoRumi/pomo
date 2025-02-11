@@ -15,6 +15,7 @@ let isThirtySecTimer = false;
 
 // Create audio element for change sound
 const changeSound = new Audio('change.wav');
+let audioInitialized = false;
 
 // Sound configuration - easy to modify
 const SOUND_CONFIG = {
@@ -26,10 +27,24 @@ const SOUND_CONFIG = {
  * The beep function is like a tiny musician in your device:
  * - Uses the change.wav sound
  * - Plays it the specified number of times
+ * - Handles iOS audio restrictions
  */
 function beep(config = SOUND_CONFIG) {
     try {
-        changeSound.play();
+        if (!audioInitialized) {
+            // For iOS, we need to load and play (it will be silent) on first interaction
+            changeSound.load();
+            changeSound.play().then(() => {
+                audioInitialized = true;
+            }).catch(e => console.log('Audio initialization error:', e));
+        } else {
+            // Reset the audio to start and play
+            changeSound.currentTime = 0;
+            const playPromise = changeSound.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(e => console.log('Audio playback error:', e));
+            }
+        }
     } catch (e) {
         console.log('Audio error:', e);
     }
@@ -182,4 +197,11 @@ function resetTimer() {
     targetEndTime = null;
     document.body.style.backgroundColor = 'black';
     updateDisplay();
-} 
+}
+
+// Initialize audio on first interaction
+document.body.addEventListener('click', () => {
+    if (!audioInitialized) {
+        beep();
+    }
+}, { once: true }); 
