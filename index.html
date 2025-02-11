@@ -24,6 +24,14 @@
             user-select: none;
         }
 
+        .line {
+            width: 50vw;
+            height: 2px;
+            background-color: rgb(255, 255, 255);
+            position: fixed;
+            left: 25vw;
+            top: 50vh;
+        }
 
         #hour-display {
             font-size: 70vmin;
@@ -64,6 +72,7 @@
 </head>
 <body onclick="startTimer()">
     <div> </div>
+    <div class="line"></div>
     <div id="hour-display">
         <div id="hours-only"></div>
         <div id="minutes-display"></div>
