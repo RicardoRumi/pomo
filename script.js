@@ -84,7 +84,7 @@ function handleClick(event) {
     
     if (event.clientY < middleOfScreen) {
         // Top floor service
-        if (isRunning && isThirtySecTimer) {
+        if (isRunning) {
             clearInterval(timerId);
             resetTimer();
         } else {
