@@ -89,7 +89,7 @@ function handleClick(event) {
             startTimer();
         }
     } else {
-        // Bottom floor service
+        willBeepEvery30Seconds = false;
         if (isRunning) {
             clearInterval(timerId);
             resetTimer();
