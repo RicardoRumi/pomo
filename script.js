@@ -85,6 +85,9 @@ function handleClick(event) {
     
     if (event.clientY < middleOfScreen) {
         willBeepEvery30Seconds = !willBeepEvery30Seconds;
+        if (!isRunning) {
+            startTimer();
+        }
     } else {
         // Bottom floor service
         if (isRunning) {
