@@ -185,7 +185,7 @@ function updateDisplay() {
     if (isThirtySecTimer) {
         document.getElementById('timer').textContent = Math.max(timeLeft, 0);
     } else {
-        const minutes = Math.max(Math.ceil(timeLeft / 60), 0);
+        const minutes = Math.max(Math.floor(timeLeft / 60), 0);
     document.getElementById('timer').textContent = minutes;
     }
 }
