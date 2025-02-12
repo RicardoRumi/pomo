@@ -12,6 +12,7 @@ let isRunning = false;
 let startTime = null;
 let targetEndTime = null;
 let isThirtySecTimer = false;
+let willBeepEvery30Seconds = false;
 
 // Create audio element for change sound
 const changeSound = new Audio('change.wav');
@@ -83,13 +84,7 @@ function handleClick(event) {
     const middleOfScreen = window.innerHeight / 2;
     
     if (event.clientY < middleOfScreen) {
-        // Top floor service
-        if (isRunning) {
-            clearInterval(timerId);
-            resetTimer();
-        } else {
-            start30SecTimer();
-        }
+        willBeepEvery30Seconds = !willBeepEvery30Seconds;
     } else {
         // Bottom floor service
         if (isRunning) {
@@ -148,7 +143,6 @@ function startTimer() {
     
     isRunning = true;
     isThirtySecTimer = false;
-    document.body.style.backgroundColor = 'red';
     timeLeft = 25 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
@@ -156,6 +150,17 @@ function startTimer() {
     timerId = setInterval(() => {
         const currentTime = Date.now();
         timeLeft = Math.ceil((targetEndTime - currentTime) / 1000);
+        if (willBeepEvery30Seconds) {
+            document.body.style.backgroundColor = 'blue';
+            if (timeLeft % 5 === 0) {
+                beep();
+            }
+        } else {
+            document.body.style.backgroundColor = 'red';
+        }
+
+
+
         
         if (timeLeft <= 0) {
             clearInterval(timerId);
