@@ -152,7 +152,7 @@ function startTimer() {
         timeLeft = Math.ceil((targetEndTime - currentTime) / 1000);
         if (willBeepEvery30Seconds) {
             document.body.style.backgroundColor = 'blue';
-            if (timeLeft % 5 === 0) {
+            if (timeLeft % 30 === 0) {
                 beep();
             }
         } else {
