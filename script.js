@@ -119,7 +119,7 @@ function start30SecTimer() {
         
         timerId = setInterval(() => {
             const currentTime = Date.now();
-            timeLeft = Math.ceil((targetEndTime - currentTime) / 1000);
+            timeLeft = Math.floor((targetEndTime - currentTime) / 1000);
             
             if (timeLeft <= 0) {
                 beep();
