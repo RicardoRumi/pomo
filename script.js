@@ -1,5 +1,5 @@
 /*
- * Our timer is like a kitchen with different tools:
+ * Our timer is like a kitchen with different tools :
  * - timeLeft is like the countdown on a microwave
  * - timerId is like the on/off switch
  * - isRunning tells us if we're cooking or not
