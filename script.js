@@ -6,7 +6,7 @@
  * - startTime and targetEndTime are like the recipe's start and end times
  * - isThirtySecTimer is like choosing between microwave (30s) or oven (25min) mode
  */
-let timeLeft = 25 * 60; // 25 minutes in seconds
+let timeLeft = 45 * 60; // 25 minutes in seconds
 let timerId = null;
 let isRunning = false;
 let startTime = null;
@@ -146,7 +146,7 @@ function startTimer() {
     
     isRunning = true;
     isThirtySecTimer = false;
-    timeLeft = 25 * 60;
+    timeLeft = 45 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
     
@@ -200,7 +200,7 @@ function updateDisplay() {
 function resetTimer() {
     isRunning = false;
     isThirtySecTimer = false;
-    timeLeft = 25 * 60;
+    timeLeft = 45 * 60;
     startTime = null;
     targetEndTime = null;
     document.body.style.backgroundColor = 'black';
