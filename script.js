@@ -90,12 +90,10 @@ function handleClick(event) {
         }
     } else {
         willBeepEvery30Seconds = false;
-        if (isRunning) {
-            clearInterval(timerId);
-            resetTimer();
-        } else {
+        if (!isRunning) {  // Only start if not already running
             startTimer();
         }
+        // Do nothing if already running - timer must complete
     }
 }
 
