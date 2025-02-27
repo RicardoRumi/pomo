@@ -4,9 +4,9 @@
  * - timerId is like the on/off switch
  * - isRunning tells us if we're cooking or not
  * - startTime and targetEndTime are like the recipe's start and end times
- * - isThirtySecTimer is like choosing between microwave (30s) or oven (25min) mode
+ * - isThirtySecTimer is like choosing between microwave (30s) or oven (30min) mode
  */
-let timeLeft = 25 * 60; // 25 minutes in seconds
+let timeLeft = 30 * 60; // 30 minutes in seconds
 let timerId = null;
 let isRunning = false;
 let startTime = null;
@@ -74,7 +74,7 @@ updateDisplay();
 /*
  * The click handler is like a shop with two departments:
  * - Upper floor (top half): Quick 30-second timer department
- * - Lower floor (bottom half): Traditional 25-minute pomodoro department
+ * - Lower floor (bottom half): Traditional 30-minute pomodoro department
  * Each floor has its own staff and procedures
  */
 document.body.removeAttribute('onclick');
@@ -134,7 +134,7 @@ function start30SecTimer() {
 }
 
 /*
- * The 25-minute timer is like a traditional oven timer:
+ * The 30-minute timer is like a traditional oven timer:
  * - Takes longer to complete
  * - Shows time in minutes instead of seconds
  * - Stops completely when done, like a proper oven timer
@@ -144,7 +144,7 @@ function startTimer() {
     
     isRunning = true;
     isThirtySecTimer = false;
-    timeLeft = 25 * 60;
+    timeLeft = 30 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
     
@@ -175,7 +175,7 @@ function startTimer() {
 
 /*
  * The display update is like a digital sign updater:
- * - Checks which department we're in (30s or 25min)
+ * - Checks which department we're in (30s or 30min)
  * - Updates the numbers accordingly
  * - Makes sure we never show negative numbers
  */
@@ -198,7 +198,7 @@ function updateDisplay() {
 function resetTimer() {
     isRunning = false;
     isThirtySecTimer = false;
-    timeLeft = 25 * 60;
+    timeLeft = 30 * 60;
     startTime = null;
     targetEndTime = null;
     document.body.style.backgroundColor = 'black';
