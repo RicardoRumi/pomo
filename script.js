@@ -42,7 +42,7 @@ function start15MinTimer() {
     if (isRunning) return;
     
     isRunning = true;
-    document.body.style.backgroundColor = 'green';
+    document.body.style.backgroundColor = "rgb(0, 112, 0)";
     timeLeft = 15 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
@@ -69,7 +69,7 @@ function start30MinTimer() {
     timeLeft = 30 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
-    document.body.style.backgroundColor = 'red';
+    document.body.style.backgroundColor = "rgb(150, 0, 0)";
     
     timerId = setInterval(() => {
         const currentTime = Date.now();
