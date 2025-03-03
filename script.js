@@ -4,9 +4,7 @@ let timerId = null;
 let isRunning = false;
 let startTime = null;
 let targetEndTime = null;
-let isThirtySecTimer = false;
 let willBeepEvery30Seconds = false;
-
 
 setInterval(() => {
     window.scrollTo(0, document.body.scrollHeight);
@@ -20,9 +18,7 @@ setInterval(() => {
     document.getElementById('minutes-display').textContent = mins;
 }, 1000);
 
-
 updateDisplay();
-
 
 document.body.removeAttribute('onclick');
 document.body.addEventListener('click', handleClick);
@@ -42,12 +38,10 @@ function handleClick(event) {
     }
 }
 
-
 function start15MinTimer() {
     if (isRunning) return;
     
     isRunning = true;
-    isThirtySecTimer = false;
     document.body.style.backgroundColor = 'green';
     timeLeft = 15 * 60;
     startTime = Date.now();
@@ -67,12 +61,11 @@ function start15MinTimer() {
     }, 1000);
 }
 
-
 function start30MinTimer() {
     if (isRunning) return;
     
     isRunning = true;
-    isThirtySecTimer = false;
+    
     timeLeft = 30 * 60;
     startTime = Date.now();
     targetEndTime = startTime + (timeLeft * 1000);
@@ -92,16 +85,13 @@ function start30MinTimer() {
     }, 1000);
 }
 
-
 function updateDisplay() {
     const minutes = Math.max(Math.floor(timeLeft / 60), 0);
     document.getElementById('timer').textContent = minutes;
 }
 
-
 function resetTimer() {
     isRunning = false;
-    isThirtySecTimer = false;
     timeLeft = 30 * 60;
     startTime = null;
     targetEndTime = null;
